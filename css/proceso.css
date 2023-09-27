@@ -1,0 +1,9 @@
+hr {
+  border: none;
+  height: 2px;
+  background-color: rgba(0, 128, 111, 0.568);
+  margin-top: 10px; 
+  margin-bottom: 20px; 
+}
+
+

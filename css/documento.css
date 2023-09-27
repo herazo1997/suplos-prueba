@@ -1,0 +1,23 @@
+body {
+  background-color: #f4f4f4;
+}
+
+.container {
+  background-color: #fff;
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  width: 80%; /* Ancho del formulario */
+  margin: 0 auto; /* Centrar el formulario horizontalmente */
+  margin-top: 50px; /* Margen superior */
+}
+
+.form-group {
+  margin-bottom: 20px; /* Espacio entre campos */
+}
+
+.btn-center {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px; /* Margen superior del botón */
+}
