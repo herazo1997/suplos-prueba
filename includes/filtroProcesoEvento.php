@@ -8,7 +8,7 @@
 </head>
 
 <body>
-  <form method="POST" action="filtrarEventosAjax.php" id="formularioFiltros">
+  <form method="" action="" id="formularioFiltros">
     <div class="form-row">
       <div class="form-group col-md-2">
         <input type="text" class="form-control" id="filtroId" name="filtroId" placeholder="ID Proceso">
@@ -28,13 +28,37 @@
         <input type="text" class="form-control" id="filtroResponsable" name="filtroResponsable" placeholder="Responsable">
       </div>
       <div class="form-group col-md-2">
-        <button type="submit" class="btn btn-info btn-block" id="btnFiltrar">Buscar</button>
+        <button type="button" class="btn btn-info btn-block" id="filtrar">Buscar</button>
       </div>
       <div class="form-group col-md-2">
-        <a href="../includes/generarExcel.php?filtroId=<?php echo $filtroId; ?>filtroCreador=<?php echo $filtroCreador; ?>&filtroObjeto=<?php echo $filtroObjeto; ?>filtroActividad=<?php echo $filtroActividad; ?>filtroDescripcion=<?php echo $filtroDescripcion; ?>filtroMoneda=<?php echo $filtroMoneda; ?>filtroPresupuesto=<?php echo $filtroPresupuesto; ?>filtroInicio=<?php echo $filtroFechaInicio; ?>filtroHoraInicio=<?php echo $filtroHoraInicio; ?>filtroFechaCierre=<?php echo $filtroFechaCierre; ?>&filtroEstado=<?php echo $filtroEstado; ?>" class="btn btn-info btn-block">Generar Excel</a>
+        <a href="../includes/generarExel.php" class="btn btn-info btn-block">Generar Excel</a>
       </div>
     </div>
   </form>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
+  <script>
+    $(document).ready(function() {
+      $("#filtrar").click(function(event) {
+        event.preventDefault();
+        $("#filtrar").val(true);
+        $.ajax({
+          url: "../includes/filtrarEventosAjax.php",
+          type: "POST",
+          dataType: "json",
+          data: {
+            filtroId: $("#filtroId").val(),
+            filtroObjeto: $("#filtroObjeto").val(),
+            filtroEstado: $("#filtroEstado").val(),
+            filtroResponsable: $("#filtroResponsable").val()
+          },
+          success: function(datos) {
+            mostrarResultadosFiltrados(datos);
+          }
+        });
+      });
+    });
+  </script>
 </body>
 
 </html>

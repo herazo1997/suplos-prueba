@@ -1,29 +1,39 @@
 <?php
-include("../database/conexionBD.php");
 
-$filtroId = $_POST['filtroId'];
-$filtroObjeto = $_POST['filtroObjeto'];
-$filtroEstado = $_POST['filtroEstado'];
-$filtroResponsable = $_POST['filtroResponsable'];
+function filtrarDatos() {
+  $filtroId = $_POST['filtroId'];
+  $filtroObjeto = $_POST['filtroObjeto'];
+  $filtroEstado = $_POST['filtroEstado'];
+  $filtroResponsable = $_POST['filtroResponsable'];
 
-$consulta = "SELECT * FROM procesos WHERE 1";
+  $query = "SELECT * FROM procesos WHERE 1";
 
-if (!empty($filtroId)) {
-    $consulta .= " AND id = $filtroId";
+  if ($filtroId != "") {
+    $query .= " AND id = '$filtroId'";
+  }
+
+  if ($filtroObjeto != "") {
+    $query .= " AND proc_objeto LIKE '%$filtroObjeto%'";
+  }
+
+  if ($filtroEstado != "") {
+    $query .= " AND proc_estado = '$filtroEstado'";
+  }
+
+  if ($filtroResponsable != "") {
+    $query .= " AND proc_nombre_responsable LIKE '%$filtroResponsable%'";
+  }
+
+  include("../database/conexionBD.php");
+  $resultado = $db->query($query);
+
+  $datos = array();
+  while ($lista = $resultado->fetch(PDO::FETCH_ASSOC)) {
+    $datos[] = $lista;
+  }
+
+  echo json_encode($datos);
 }
 
-if (!empty($filtroResponsable)) {
-  $consulta .= " AND proc_nombre_responsable LIKE '%$filtroResponsable%'";
-}
-
-if (!empty($filtroObjeto)) {
-    $consulta .= " AND proc_objeto LIKE '%$filtroObjeto%'";
-}
-
-if (!empty($filtroEstado)) {
-    $consulta .= " AND LOWER(proc_estado) = '$filtroEstado'";
-}
-
-
-
-$resultado = $db->query($consulta);
+filtrarDatos();
+?>

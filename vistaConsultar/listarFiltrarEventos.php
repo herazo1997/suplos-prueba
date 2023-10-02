@@ -63,6 +63,33 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
+
+  <script>
+    function mostrarResultadosFiltrados(datos) {
+      var tabla = document.getElementById("tablaEventos").getElementsByTagName('tbody')[0];
+
+      tabla.innerHTML = "";
+
+      for (var i = 0; i < datos.length; i++) {
+        var fila = tabla.insertRow();
+
+        fila.insertCell().textContent = datos[i]['id'];
+        fila.insertCell().textContent = i + 1; 
+        fila.insertCell().textContent = datos[i]['proc_objeto'];
+        fila.insertCell().textContent = datos[i]['proc_descripcion'];
+        fila.insertCell().textContent = datos[i]['proc_fecha_inicio'];
+        fila.insertCell().textContent = datos[i]['proc_fecha_fin'];
+        fila.insertCell().textContent = datos[i]['proc_estado'];
+        fila.insertCell().textContent = datos[i]['proc_nombre_responsable'];
+
+        var accionesCelda = fila.insertCell();
+        accionesCelda.innerHTML = '<a href="editarConsultar.php?id=' + datos[i]['id'] + '" class="btn btn-info btn-sm">Editar</a>' +
+          '<a href="eliminarConsultar.php?id=' + datos[i]['id'] + '" class="btn btn-danger btn-sm" onclick="return confirm(\'¿Estás seguro de que deseas eliminar este evento?\')">Eliminar</a>';
+      }
+    }
+  </script>
+
 </body>
 
 </html>
